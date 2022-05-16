@@ -1,3 +1,17 @@
+/* FUNCTIONS */
+function printPosts(){
+    for(let i=0; i<posts.length; i++){
+        const template = document.getElementById("template").content.cloneNode(true);
+        template.querySelector(".profile-pic").src = posts[i].author.image;
+        template.querySelector(".post-meta__author").innerHTML = posts[i].author.name;
+        // template.querySelector("post-meta__time").innerHTML = posts[i].created;
+        template.querySelector(".post__text").innerHTML = posts[i].content;
+        template.querySelector(".post__image").src = posts[i].media;
+        template.getElementById("like-counter-1").innerHTML = posts[i].likes;
+        container.appendChild(template);
+    }
+}
+/* VARIABLES */
 const posts = [
     {
         "id": 1,
@@ -55,3 +69,7 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+// DOM //
+const container = document.getElementById("container");
+/* MAIN */
+printPosts();
