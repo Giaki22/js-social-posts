@@ -9,6 +9,21 @@ function printPosts(){
         template.querySelector(".post__image").src = posts[i].media;
         template.getElementById("like-counter-1").innerHTML = posts[i].likes;
         container.appendChild(template);
+        const button = document.querySelector(".like-button");
+        button.addEventListener("click", 
+        function(){
+                if (!(this.classList.contains("like-button--liked"))){
+                    this.classList.add("like-button--liked");
+                    likesPlusIDs.likes++;
+                    // likesPlusIDs.ids += posts.this.id;
+                    console.log(likesPlusIDs);
+                } else {
+                    this.classList.remove("like-button--liked");
+                    likesPlusIDs.likes--;
+                    // likesPlusIDs.ids -= posts.this.id;
+                    console.log(likesPlusIDs);
+                }
+        })
     }
 }
 /* VARIABLES */
@@ -69,6 +84,7 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+let likesPlusIDs = {likes : 0, ids : 0};
 // DOM //
 const container = document.getElementById("container");
 /* MAIN */
