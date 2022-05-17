@@ -2,27 +2,33 @@
 function printPosts(){
     for(let i=0; i<posts.length; i++){
         const template = document.getElementById("template").content.cloneNode(true);
-        template.querySelector(".profile-pic").src = posts[i].author.image;
+        if (posts[i].author.image !== null){
+            template.querySelector(".profile-pic").src = posts[i].author.image;
+        } else {
+            const nameAndSurname = posts[i].author.name.split(" ");
+            template.querySelector(".post-meta__icon").innerHTML = `<div class="profile-pic-default"><span>${nameAndSurname[0][0]}${nameAndSurname[1][0]}</span></div>`
+        }
         template.querySelector(".post-meta__author").innerHTML = posts[i].author.name;
         template.querySelector(".post-meta__time").innerHTML = posts[i].created.split("-").reverse().join("-");
         template.querySelector(".post__text").innerHTML = posts[i].content;
         template.querySelector(".post__image").src = posts[i].media;
         template.getElementById("like-counter-1").innerHTML = posts[i].likes;
         container.appendChild(template);
-        const button = document.querySelector(".like-button");
-        button.addEventListener("click", 
+        const button = document.querySelectorAll(".like-button");
+        button[i].addEventListener("click", 
         function(e){
-                e.preventDefault();
+            e.preventDefault();
+            const likeCounter = document.querySelectorAll(".js-likes-counter");
                 if (!(this.classList.contains("like-button--liked"))){
                     this.classList.add("like-button--liked");
                     likesPlusIDs.likes++;
-                    // likesPlusIDs.ids += this.posts.id;
-                    console.log(likesPlusIDs);
+                    likesPlusIDs.ids += this.getAttribute("data-postid");
+                    likeCounter[i].innerHTML++;
                 } else {
                     this.classList.remove("like-button--liked");
                     likesPlusIDs.likes--;
-                    // likesPlusIDs.ids -= this.posts.id;
-                    console.log(likesPlusIDs);
+                    likesPlusIDs.ids -= this.getAttribute("data-postid");
+                    likeCounter[i].innerHTML--;
                 }
         });
     }
